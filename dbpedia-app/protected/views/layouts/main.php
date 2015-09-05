@@ -67,7 +67,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-        	<div class="span6 well" id="jsonData">
+        	<div class="span6 well" id="jsonData" style="display:none">
         		<p> Hi </p>
         	</div>
         	
@@ -85,6 +85,7 @@
       // ajax_url = "http://dbpedia.org/resource/";
       // ajax_url = ajax_url + city_name.replace(" ","_")
       $('#loader').show();
+      $('#jsonData').hide();
 
       //callOtherDomain(ajax_url);
       $.ajax({
@@ -93,8 +94,25 @@
         data: {city:city_name}
       }).done(function(data) {
       	var parsed_data = JSON.parse(data);
-      	alert(parsed_data.success);
-      	alert(parsed_data.populationTotal);
+
+      	var str = "";
+      	for(k in parsed_data){
+      		if(k!= 'success'){
+      			str +="<h5><u>"+k+":</u></h5>";
+      			for(var i in parsed_data[k]){
+      				temp = parsed_data[k][i];
+      				for(key in temp){
+      					str += "<p>"+key+" - <strong>"+temp[key]+"</strong></p>"
+      				}
+      			}
+      			str+="</br>";
+      		}
+
+      	}
+      	$('#jsonData').html(str);
+      	$('#jsonData').show();
+      	//alert(parsed_data.success);
+      	//alert(parsed_data.populationTotal);
 
         if ( console && console.log ) {
           console.log(data);
