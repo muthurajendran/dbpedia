@@ -46,7 +46,7 @@
             <div class="col-md-4">
               <select id="selectbasic" name="selectbasic" class="form-control">
                 <option value="1">Los Angeles</option>
-                <option value="2">New York</option>
+                <option value="2">Seattle</option>
                 <option value="3">Houston</option>
               </select>
             </div>
@@ -57,6 +57,7 @@
             <label class="col-md-4 control-label" for="submit"></label>
             <div class="col-md-4">
               <button id="submit" name="submit" class="btn btn-primary">Submit</button>
+              <p style="display:none" id="loader">Loading Data...</p>
             </div>
           </div>
 
@@ -80,24 +81,29 @@
 
     $("#cityForm").submit(function(e) {
       e.preventDefault();
-      city = $("#selectbasic option:selected").text();
-      ajax_url = "http://dbpedia.org/resource/";
-      ajax_url = ajax_url + city.replace(" ","_")
+      city_name = $("#selectbasic option:selected").text().replace(" ","_");
+      // ajax_url = "http://dbpedia.org/resource/";
+      // ajax_url = ajax_url + city_name.replace(" ","_")
+      $('#loader').show();
 
       //callOtherDomain(ajax_url);
       $.ajax({
-        type: "GET",
+        type: "POST",
         url: "index.php/site/data",
+        data: {city:city_name}
       }).done(function(data) {
+      	var parsed_data = JSON.parse(data);
+      	alert(parsed_data.success);
+      	alert(parsed_data.populationTotal);
+
         if ( console && console.log ) {
           console.log(data);
         }
-        alert("done");
       }).fail(function() {
 	    alert( "error" );
 	  })
 	  .always(function() {
-	    alert( "complete" );
+	  	$('#loader').hide();
 	  });
 
     });

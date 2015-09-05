@@ -22,14 +22,25 @@ class SiteController extends Controller
 	}
 
 	public function actionData(){
+		if(isset($_POST['city'])){
+			$city = $_POST['city'];
+		} else {
+			$data['success'] = 0;
+			$data['message'] = "No City Selected";
+			echo json_encode($data);
+			die();
+		}
+
+		// $url = getUrlDbpediaAbstract($city);
+		$url = 'http://dbpedia.org/resource/'.$city;
 		$output = Yii::app()->curl->setOptions(array(
 			CURLOPT_HTTPHEADER => array('Accept: application/json'),
 			CURLOPT_FOLLOWLOCATION => TRUE
-			))->get('http://dbpedia.org/resource/Los_Angeles');
+			))->get($url);
 
 		if($output){
 			$result = json_decode($output,true);
-			$url = 'http://dbpedia.org/resource/Los_Angeles';
+			
 
 			$data = array();
 			//Get the total population
@@ -45,6 +56,7 @@ class SiteController extends Controller
 				$temp['value'] = $row['value'];
 				$data['areaTotal'][] = $temp;
 			}
+			//var_dump($url);
 			//var_dump($result[$url]);
 
 			//Get the Km or Density
@@ -71,6 +83,28 @@ class SiteController extends Controller
 			echo json_encode($data);
 		}
 	}
+
+
+function getUrlDbpediaAbstract($term)
+{
+   $format = 'json';
+ 
+   $query = 
+   "PREFIX dbp: <http://dbpedia.org/resource/>
+   PREFIX dbp2: <http://dbpedia.org/ontology/>
+ 
+   SELECT ?abstract
+   WHERE {
+      dbp:".$term." dbp2:abstract ?abstract . 
+      FILTER langMatches(lang(?abstract), 'en')
+   }";
+ 
+   $searchUrl = 'http://dbpedia.org/sparql?'
+      .'query='.urlencode($query)
+      .'&format='.$format;
+	  
+   return $searchUrl;
+}
 
 	/**
 	 * This is the default 'index' action that is invoked
