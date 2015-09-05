@@ -82,19 +82,17 @@
     $("#cityForm").submit(function(e) {
       e.preventDefault();
       city_name = $("#selectbasic option:selected").text().replace(" ","_");
-      // ajax_url = "http://dbpedia.org/resource/";
-      // ajax_url = ajax_url + city_name.replace(" ","_")
+
+      //Hide and show html content
       $('#loader').show();
       $('#jsonData').hide();
-
-      //callOtherDomain(ajax_url);
       $.ajax({
         type: "POST",
         url: "index.php/site/data",
         data: {city:city_name}
       }).done(function(data) {
       	var parsed_data = JSON.parse(data);
-
+      	//Iterate over the response
       	var str = "";
       	for(k in parsed_data){
       		if(k!= 'success'){
@@ -107,16 +105,10 @@
       			}
       			str+="</br>";
       		}
-
       	}
       	$('#jsonData').html(str);
       	$('#jsonData').show();
-      	//alert(parsed_data.success);
-      	//alert(parsed_data.populationTotal);
 
-        if ( console && console.log ) {
-          console.log(data);
-        }
       }).fail(function() {
 	    alert( "error" );
 	  })

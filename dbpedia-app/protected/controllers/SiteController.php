@@ -56,8 +56,6 @@ class SiteController extends Controller
 				$temp['value'] = $row['value'];
 				$data['areaTotal'][] = $temp;
 			}
-			//var_dump($url);
-			//var_dump($result[$url]);
 
 			//Get the Km or Density
 			if(isset($result[$url]['http://dbpedia.org/property/populationDensityKm'])){
@@ -84,7 +82,7 @@ class SiteController extends Controller
 		}
 	}
 
-
+//TO DO fetch otherways
 function getUrlDbpediaAbstract($term)
 {
    $format = 'json';
