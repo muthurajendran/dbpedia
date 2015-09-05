@@ -1,0 +1,35 @@
+2015/09/05 00:13:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "data".' in /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php:286
+Stack trace:
+#0 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(141): CWebApplication->runController('data')
+#1 /Users/Muthu/Desktop/dbpedia/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#2 /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/index.php/data
+HTTP_REFERER=http://testapp.com/
+---
+2015/09/05 00:28:49 [error] [php] Missing argument 2 for Curl::setOption(), called in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php on line 28 and defined (/Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/extensions/Curl.php:58)
+Stack trace:
+#0 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(286): SiteController->runAction()
+#2 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /Users/Muthu/Desktop/dbpedia/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#6 /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/site/data
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/extensions/Curl.php (58)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php (28)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php (13)
+2015/09/05 00:30:01 [error] [php] Missing argument 2 for Curl::setOption(), called in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php on line 28 and defined (/Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/extensions/Curl.php:58)
+Stack trace:
+#0 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(308): CInlineAction->runWithParams()
+#1 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(286): SiteController->runAction()
+#2 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#3 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(282): SiteController->run()
+#4 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#5 /Users/Muthu/Desktop/dbpedia/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#6 /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/site/data
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/extensions/Curl.php (58)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php (28)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php (13)
