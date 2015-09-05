@@ -23,12 +23,53 @@ class SiteController extends Controller
 
 	public function actionData(){
 		$output = Yii::app()->curl->setOptions(array(
-			CURLOPT_HTTPHEADER => array("Accept: 'application/json'"),
+			CURLOPT_HTTPHEADER => array('Accept: application/json'),
 			CURLOPT_FOLLOWLOCATION => TRUE
-			))->get('http://dbpedia.org/resource');
+			))->get('http://dbpedia.org/resource/Los_Angeles');
 
-		var_dump($output);
-		die();
+		if($output){
+			$result = json_decode($output,true);
+			$url = 'http://dbpedia.org/resource/Los_Angeles';
+
+			$data = array();
+			//Get the total population
+			foreach ($result[$url]['http://dbpedia.org/ontology/populationTotal'] as $row) {
+				$temp['type'] =  $row['type'];
+				$temp['value'] = $row['value'];
+				$data['populationTotal'][] = $temp;
+			}
+
+			//Get the area
+			foreach ($result[$url]['http://dbpedia.org/ontology/areaTotal'] as $row) {
+				$temp['type'] =  $row['type'];
+				$temp['value'] = $row['value'];
+				$data['areaTotal'][] = $temp;
+			}
+			//var_dump($result[$url]);
+
+			//Get the Km or Density
+			if(isset($result[$url]['http://dbpedia.org/property/populationDensityKm'])){
+				foreach ($result[$url]['http://dbpedia.org/property/populationDensityKm'] as $row) {
+					$temp['type'] =  $row['type'];
+					$temp['in'] =  'Km';
+					$temp['value'] = $row['value'];
+					$data['density'][] = $temp;
+				}
+			} else if(isset($result[$url]['http://dbpedia.org/property/populationDensitySqMi'])){
+				foreach ($result[$url]['http://dbpedia.org/property/populationDensitySqMi'] as $row) {
+					$temp['type'] =  $row['type'];
+					$temp['in'] =  'SqMi';
+					$temp['value'] = $row['value'];
+					$data['density'][] = $temp;
+				}
+			}
+			$data['success'] = 1;
+			echo json_encode($data);
+		}else{
+			$data['success'] = 0;
+			$data['message'] = "System not available";
+			echo json_encode($data);
+		}
 	}
 
 	/**

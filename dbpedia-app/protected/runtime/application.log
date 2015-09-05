@@ -33,3 +33,36 @@ REQUEST_URI=/index.php/site/data
 in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/extensions/Curl.php (58)
 in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php (28)
 in /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php (13)
+2015/09/05 04:06:16 [error] [php] Invalid argument supplied for foreach() (/Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php:50)
+Stack trace:
+#0 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(286): SiteController->runAction()
+#1 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /Users/Muthu/Desktop/dbpedia/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#5 /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/site/data
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php (50)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php (13)
+2015/09/05 04:06:59 [error] [php] Invalid argument supplied for foreach() (/Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php:50)
+Stack trace:
+#0 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(286): SiteController->runAction()
+#1 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /Users/Muthu/Desktop/dbpedia/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#5 /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/site/data
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php (50)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php (13)
+2015/09/05 04:07:48 [error] [php] Invalid argument supplied for foreach() (/Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php:50)
+Stack trace:
+#0 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(286): SiteController->runAction()
+#1 /Users/Muthu/Desktop/dbpedia/framework/web/CController.php(265): SiteController->runActionWithFilters()
+#2 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(282): SiteController->run()
+#3 /Users/Muthu/Desktop/dbpedia/framework/web/CWebApplication.php(141): CWebApplication->runController()
+#4 /Users/Muthu/Desktop/dbpedia/framework/base/CApplication.php(184): CWebApplication->processRequest()
+#5 /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/site/data
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/protected/controllers/SiteController.php (50)
+in /Users/Muthu/Desktop/dbpedia/dbpedia-app/index.php (13)
