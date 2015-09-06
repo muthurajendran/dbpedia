@@ -32,70 +32,93 @@ class SiteController extends Controller
 		}
 
 		// $url = getUrlDbpediaAbstract($city);
-		$url = 'http://dbpedia.org/resource/'.$city;
+		//$url = 'http://dbpedia.org/resource/'.$city;
+		$url = $this->getUrlDbpediaAbstract($city);
+
 		$output = Yii::app()->curl->setOptions(array(
-			CURLOPT_HTTPHEADER => array('Accept: application/json'),
+			//CURLOPT_HTTPHEADER => array('Accept: application/json'),
 			CURLOPT_FOLLOWLOCATION => TRUE
 			))->get($url);
-
+	
 		if($output){
-			$result = json_decode($output,true);
-			
+			$responseArray = json_decode($output,true);
+			$result = $responseArray['results']['bindings'];
 
-			$data = array();
-			//Get the total population
-			foreach ($result[$url]['http://dbpedia.org/ontology/populationTotal'] as $row) {
-				$temp['type'] =  $row['type'];
-				$temp['value'] = $row['value'];
-				$data['populationTotal'][] = $temp;
+			foreach ($result as $value) {
+					foreach ($value as $key => $value) {
+						//var_dump($key);
+						if(!in_array($key, array('x','abstract'))){
+							$temp['type'] = $value['type'];
+							$temp['value'] = $value['value'];
+							$data[$key][] = $temp;
+						}
+					}
 			}
 
-			//Get the area
-			foreach ($result[$url]['http://dbpedia.org/ontology/areaTotal'] as $row) {
-				$temp['type'] =  $row['type'];
-				$temp['value'] = $row['value'];
-				$data['areaTotal'][] = $temp;
-			}
-
-			//Get the Km or Density
-			if(isset($result[$url]['http://dbpedia.org/property/populationDensityKm'])){
-				foreach ($result[$url]['http://dbpedia.org/property/populationDensityKm'] as $row) {
-					$temp['type'] =  $row['type'];
-					$temp['in'] =  'Km';
-					$temp['value'] = $row['value'];
-					$data['density'][] = $temp;
-				}
-			} else if(isset($result[$url]['http://dbpedia.org/property/populationDensitySqMi'])){
-				foreach ($result[$url]['http://dbpedia.org/property/populationDensitySqMi'] as $row) {
-					$temp['type'] =  $row['type'];
-					$temp['in'] =  'SqMi';
-					$temp['value'] = $row['value'];
-					$data['density'][] = $temp;
-				}
-			}
 			$data['success'] = 1;
 			echo json_encode($data);
-		}else{
-			$data['success'] = 0;
-			$data['message'] = "System not available";
-			echo json_encode($data);
 		}
+
+		//Previous direct code
+		// if($output){
+		// 	$result = json_decode($output,true);
+			
+
+		// 	$data = array();
+		// 	//Get the total population
+		// 	foreach ($result[$url]['http://dbpedia.org/ontology/populationTotal'] as $row) {
+		// 		$temp['type'] =  $row['type'];
+		// 		$temp['value'] = $row['value'];
+		// 		$data['populationTotal'][] = $temp;
+		// 	}
+
+		// 	//Get the area
+		// 	foreach ($result[$url]['http://dbpedia.org/ontology/areaTotal'] as $row) {
+		// 		$temp['type'] =  $row['type'];
+		// 		$temp['value'] = $row['value'];
+		// 		$data['areaTotal'][] = $temp;
+		// 	}
+
+		// 	//Get the Km or Density
+		// 	if(isset($result[$url]['http://dbpedia.org/property/populationDensityKm'])){
+		// 		foreach ($result[$url]['http://dbpedia.org/property/populationDensityKm'] as $row) {
+		// 			$temp['type'] =  $row['type'];
+		// 			$temp['in'] =  'Km';
+		// 			$temp['value'] = $row['value'];
+		// 			$data['density'][] = $temp;
+		// 		}
+		// 	} else if(isset($result[$url]['http://dbpedia.org/property/populationDensitySqMi'])){
+		// 		foreach ($result[$url]['http://dbpedia.org/property/populationDensitySqMi'] as $row) {
+		// 			$temp['type'] =  $row['type'];
+		// 			$temp['in'] =  'SqMi';
+		// 			$temp['value'] = $row['value'];
+		// 			$data['density'][] = $temp;
+		// 		}
+		// 	}
+		// 	$data['success'] = 1;
+		// 	echo json_encode($data);
+		// }else{
+		// 	$data['success'] = 0;
+		// 	$data['message'] = "System not available";
+		// 	echo json_encode($data);
+		// }
 	}
 
 //TO DO fetch otherways
-function getUrlDbpediaAbstract($term)
+public function getUrlDbpediaAbstract($term)
 {
    $format = 'json';
- 
-   $query = 
-   "PREFIX dbp: <http://dbpedia.org/resource/>
-   PREFIX dbp2: <http://dbpedia.org/ontology/>
- 
-   SELECT ?abstract
-   WHERE {
-      dbp:".$term." dbp2:abstract ?abstract . 
-      FILTER langMatches(lang(?abstract), 'en')
-   }";
+
+  $query = " 
+  PREFIX dbp2: <http://dbpedia.org/ontology/>
+  SELECT * WHERE {
+  ?x rdfs:label '".$term."'@en.
+  ?x dbp2:populationTotal ?populationTotal.
+  ?x dbp2:abstract ?abstract.
+  ?x dbp2:populationDensity ?populationDensity.
+  ?x dbp2:areaTotal ?areaTotal.
+  FILTER (LANG(?abstract) = 'en')
+}";
  
    $searchUrl = 'http://dbpedia.org/sparql?'
       .'query='.urlencode($query)

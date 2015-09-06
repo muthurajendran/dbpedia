@@ -81,8 +81,8 @@
 
     $("#cityForm").submit(function(e) {
       e.preventDefault();
-      city_name = $("#selectbasic option:selected").text().replace(" ","_");
-
+      //city_name = $("#selectbasic option:selected").text().replace(" ","_");
+      city_name = $("#selectbasic option:selected").text();
       //Hide and show html content
       $('#loader').show();
       $('#jsonData').hide();
@@ -94,6 +94,7 @@
       	var parsed_data = JSON.parse(data);
       	//Iterate over the response
       	var str = "";
+      	str += "<h4>DBPedia Info for City -"+city_name+"</h4>";
       	for(k in parsed_data){
       		if(k!= 'success'){
       			str +="<h5><u>"+k+":</u></h5>";
