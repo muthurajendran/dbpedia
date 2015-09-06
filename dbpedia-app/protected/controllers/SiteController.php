@@ -57,6 +57,10 @@ class SiteController extends Controller
 
 			$data['success'] = 1;
 			echo json_encode($data);
+		}else{
+			$data['success'] = 0;
+			$data['message'] = "System not available";
+			echo json_encode($data);
 		}
 
 		//Previous direct code
